@@ -21,8 +21,13 @@
 
 'use strict';
 
-const applicationServerPublicKey = 'BHdd2PwLOsYaDQQOmqw_8KIIYOQYECWN' +
-  'lat0K8GScnytjV88e6Xifn0GMz7MbScAkxf_kVJhnp-0NrB_P4u6WHw';
+//const APIURL = 'https://testpushchromentfy.free.beeceptor.com';
+const APIURL = 'https://api.myjson.com/bins/e65os';
+
+//const applicationServerPublicKey = 'BHdd2PwLOsYaDQQOmqw_8KIIYOQYECWN' +
+  //'lat0K8GScnytjV88e6Xifn0GMz7MbScAkxf_kVJhnp-0NrB_P4u6WHw';
+
+const applicationServerPublicKey = 'BOiNz4YUA-uxeEABNYgs_o7uhVzxCm1M6KwPhvBIzC_qj2DxK-BwgaxKh9G34kVvcO4l-3BLT6_BYvoMQt8jg0s';
 
 const pushButton = document.querySelector('.js-push-btn');
 
@@ -61,8 +66,61 @@ function updateBtn() {
   pushButton.disabled = false;
 }
 
+function update_json_data(data){
+      $.getJSON(APIURL, function(resp){
+
+          if(typeof(resp) == 'object'){
+              var ts = new Date().getTime();
+              resp[ts] = data;
+
+              resp = JSON.stringify(resp);
+          }
+
+          if(resp == undefined || resp == null || resp == '') return false;
+
+          $.ajax({
+              //url: 'https://webhook.site/097a572e-1a94-49b8-9816-6c9d008e679c',
+              //url: 'https://api.myjson.com/bins/e65os',
+              url: APIURL,
+              //contentType: "application/json; charset=utf-8",
+              contentType: "application/json",
+              type: 'PUT',
+              //crossDomain: true,
+              dataType: 'json',
+              data: resp
+          });
+
+      });
+}
+
 function updateSubscriptionOnServer(subscription) {
   // TODO: Send subscription to application server
+
+  if(subscription == null){
+      var emptydata = {};
+      emptydata.values = '';
+      emptydata = JSON.stringify(emptydata);
+      update_json_data(emptydata);
+  }
+  
+  var jsondata = subscription;
+
+  if(jsondata == undefined || jsondata == null || jsondata == ''){
+      jsondata = false;
+  }
+
+  console.log(jsondata);
+
+  if(jsondata != false){
+
+      jsondata = JSON.stringify(jsondata);
+
+      console.log('try ajax');
+
+      console.log(jsondata);
+      update_json_data(jsondata);
+  }else{
+  }
 
   const subscriptionJson = document.querySelector('.js-subscription-json');
   const subscriptionDetails =
