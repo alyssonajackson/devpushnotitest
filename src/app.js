@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const applicationServerKey = "BCmti7ScwxxVAlB7WAyxoOXtV7J8vVCXwEDIFXjKvD-ma-yJx_eHJLdADyyzzTKRGb395bSAtxlh4wuDycO3Ih4";
+    const applicationServerKey = "BFZr2av0/OQazm4rxCUx2hmMNx/neS4mPXqQovxxrqIfIrISfLfbl1Pwlm2rfyx/IJs7qQm8sT20RWJBFdlXJT4";
     let isPushEnabled = false;
 
     const pushButton = document.querySelector('#push-subscription-button');
@@ -131,6 +131,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 // We aren't subscribed to push, so set UI to allow the user to enable push
                 return;
             }
+
+            console.log(subscription);
 
             // Keep your server in sync with the latest endpoint
             return push_sendSubscriptionToServer(subscription, 'PUT');

@@ -8,6 +8,8 @@ if (!isset($subscription['endpoint'])) {
 
 $method = $_SERVER['REQUEST_METHOD'];
 
+//$data = get_ds();
+
 switch ($method) {
     case 'POST':
         // create a new subscription entry in your database (endpoint is unique)

@@ -1,4 +1,7 @@
 <?php
+
+#register_shutdown_function(function() { if($err = error_get_last()) { var_dump($err); }});
+
 require __DIR__ . '/../vendor/autoload.php';
 use Minishlink\WebPush\WebPush;
 
@@ -10,8 +13,8 @@ $subscription = json_decode(file_get_contents('php://input'), true);
 $auth = array(
     'VAPID' => array(
         'subject' => 'https://github.com/Minishlink/web-push-php-example/',
-        'publicKey' => 'BCmti7ScwxxVAlB7WAyxoOXtV7J8vVCXwEDIFXjKvD-ma-yJx_eHJLdADyyzzTKRGb395bSAtxlh4wuDycO3Ih4',
-        'privateKey' => 'HJweeF64L35gw5YLECa-K7hwp3LLfcKtpdRNK8C_fPQ', // in the real world, this would be in a secret file
+        'publicKey' => 'BFZr2av0/OQazm4rxCUx2hmMNx/neS4mPXqQovxxrqIfIrISfLfbl1Pwlm2rfyx/IJs7qQm8sT20RWJBFdlXJT4',
+        'privateKey' => 'ZGogr9mGc1sUdAXzxmF9YlvAC6dqGRs8G9aSqAsDbVc', // in the real world, this would be in a secret file
     ),
 );
 
