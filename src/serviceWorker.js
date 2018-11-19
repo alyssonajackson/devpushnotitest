@@ -3,17 +3,21 @@ self.addEventListener('push', function (event) {
         return;
     }
 
-    const sendNotification = body => {
+    const sendNotification = (subject, message, icon) => {
         // you could refresh a notification badge here with postMessage API
-        const title = "Web Push example";
-
-        return self.registration.showNotification(title, {
-            body,
+        console.log(icon);
+        return self.registration.showNotification(subject, {
+            body: message,
+            icon: icon
         });
     };
 
-    if (event.data) {
-        const message = event.data.text();
-        event.waitUntil(sendNotification(message));
+    if (event.data.json()) {
+        console.log(event.data.json());
+        event.waitUntil(sendNotification(
+            event.data.json().subject,
+            event.data.json().message,
+            event.data.json().icon,
+        ));
     }
 });

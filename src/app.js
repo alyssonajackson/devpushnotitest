@@ -211,12 +211,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const key = subscription.getKey('p256dh');
             const token = subscription.getKey('auth');
 
+            const subject = prompt('enter subject', 'hello world');
+            const message = prompt('enter message', 'lorem ipsum');
+            const icon = prompt('enter icon', 'https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/png/check-2x.png');
+
             fetch('send_push_notification.php', {
                 method: 'POST',
                 body: JSON.stringify({
                     endpoint: subscription.endpoint,
                     key: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(subscription.getKey('p256dh')))) : null,
-                    token: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(subscription.getKey('auth')))) : null
+                    token: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(subscription.getKey('auth')))) : null,
+                    subject: subject,
+                    message: message,
+                    icon: icon
                 })
             })
         })

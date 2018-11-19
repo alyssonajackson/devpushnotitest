@@ -8,7 +8,21 @@ use Minishlink\WebPush\WebPush;
 // here I'll get the subscription endpoint in the POST parameters
 // but in reality, you'll get this information in your database
 // because you already stored it (cf. push_subscription.php)
-$subscription = json_decode(file_get_contents('php://input'), true);
+$inputdata = json_decode(file_get_contents('php://input'), true);
+
+$subscription = [];
+
+function get_value($var, $k){
+    if(is_array($var))
+        return isset($var[$k]) ? $var[$k] : '';
+    elseif(is_object($var))
+        return isset($var->$k) ? $var->$k : '';
+    return '';
+}
+
+$subscription['endpoint'] = get_value($inputdata, 'endpoint');
+$subscription['key'] = get_value($inputdata, 'key');
+$subscription['token'] = get_value($inputdata, 'token');
 
 $auth = array(
     'VAPID' => array(
@@ -20,9 +34,17 @@ $auth = array(
 
 $webPush = new WebPush($auth);
 
+$postdata = [
+    'subject' => get_value($inputdata, 'subject'),
+    'message' => get_value($inputdata, 'message'),
+    'icon' => get_value($inputdata, 'icon'),
+];
+
+$postdata = json_encode($postdata);
+
 $res = $webPush->sendNotification(
     $subscription['endpoint'],
-    "Hello!",
+    $postdata,
     $subscription['key'],
     $subscription['token'],
     true
